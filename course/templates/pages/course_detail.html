@@ -1,7 +1,7 @@
 {% extends 'layouts/public_base.html' %}
-{% load static %}
+
 {% block description %}
-  {% course.short_desc %}
+  {{ course.short_desc}}
 {% endblock %}
 
 {% block keywords %}
@@ -15,7 +15,6 @@
 {% block content %}
     <section class="py-5">
         <div class="row py-5">
-        {%for course in courses%}
         <div class="card" style="width: 18rem;">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
@@ -24,7 +23,6 @@
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
-        {% endfor %}
         </div>
   </section>
 {% endblock %}
