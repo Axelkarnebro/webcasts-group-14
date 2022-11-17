@@ -1,0 +1,30 @@
+{% extends 'layouts/public_base.html' %}
+{% load static %}
+{% block description %}
+  List of django courses
+{% endblock %}
+
+{% block keywords %}
+  Course List, Free courses, Not a scam
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="row py-5">
+        {%for course in courses%}
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">{{ course.short_desc }}</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+  </section>
+{% endblock %}

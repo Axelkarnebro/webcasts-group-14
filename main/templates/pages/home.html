@@ -19,7 +19,7 @@
         <h1 class="fw-light">Django Tutorials</h1>
         <p class="lead text-muted">Welcome to the django tutorials, your one stop shop for all your django training needs</p>
         <p>
-          <a href="#" class="btn btn-primary my-2">Check our list of courses</a>
+          <a href="{% url 'course:course_list' %}" class="btn btn-primary my-2">Check our list of courses</a>
           <a href="{% url 'main:about_us' %}" class="btn btn-secondary my-2">Learn more about us</a>
         </p>
       </div>
