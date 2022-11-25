@@ -1,0 +1,28 @@
+{% extends 'layouts/public_base.html' %}
+{% load static %}
+{% block description %}
+  This is the contact page
+{% endblock %}
+
+{% block keywords %}
+  Contact, stalk, email, get help, you need it
+{% endblock %}
+
+{% block tite %}
+  Contact Us
+{% endblock %}
+
+{% block content %}
+  <section class="mt-4 text-center">
+    <div class="row">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Contact us using the form below</h1>
+        <form action="{% url 'main:contact_us' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

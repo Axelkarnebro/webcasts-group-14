@@ -1,0 +1,83 @@
+<div class="form-group
+            {% if form.title.errors %}
+              has-error
+            {% endif %}"
+>
+  <label class="control-label" for="title">Title</label>
+  <input class="form-control" type="text" id="title"
+         placeholder="Title" name="title"
+         value="{{ form.title.value|default_if_none:"" }}">
+  {% if form.title.errors %}
+    <div class="form-group has-error">
+      <div class="control-label">
+        {{ form.title.errors }}
+      </div>
+    </div>
+  {% endif %}
+</div>
+<div class="form-group
+  {% if form.status.errors %}
+    has-error
+  {% endif %}"
+>
+  <label class="control-label" for="course">Status</label>
+  <select class="form-control" name="status">
+    {% for x,y in form.fields.status.choices %}
+      <option value="{{ x }}"
+          {% if form.status.value == x %}
+              selected="selected"
+          {% endif %}
+      >{{ y }}</option>
+    {% endfor %}
+  </select>
+</div>
+<div class="form-group
+            {% if form.price.errors %}
+              has-error
+            {% endif %}"
+>
+  <label class="control-label" for="price">Price</label>
+  <input class="form-control" type="number" id="price"
+         placeholder="Price" name="price" step="0.01"
+         value="{{ form.price.value|default_if_none:"" }}">
+  {% if form.price.errors %}
+    <div class="form-group has-error">
+      <div class="control-label">
+        {{ form.price.errors }}
+      </div>
+    </div>
+  {% endif %}
+</div>
+<div class="form-group
+            {% if form.short_desc.errors %}
+              has-error
+            {% endif %}"
+>
+  <label class="control-label" for="short_desc">Short Description</label>
+  <input class="form-control" type="text" id="short_desc"
+         placeholder="Short Description" name="short_desc"
+         value="{{ form.short_desc.value|default_if_none:"" }}">
+  {% if form.short_desc.errors %}
+    <div class="form-group has-error">
+      <div class="control-label">
+        {{ form.short_desc.errors }}
+      </div>
+    </div>
+  {% endif %}
+</div>
+<div class="form-group
+            {% if form.desc.errors %}
+              has-error
+            {% endif %}"
+>
+  <label class="control-label" for="desc">Description</label>
+  <textarea class="form-control" id="desc"
+            placeholder="Description" name="desc">{{ form.desc.value|default_if_none:"" }}</textarea>
+  {% if form.desc.errors %}
+    <div class="form-group has-error">
+      <div class="control-label">
+        {{ form.desc.errors }}
+      </div>
+    </div>
+  {% endif %}
+</div>

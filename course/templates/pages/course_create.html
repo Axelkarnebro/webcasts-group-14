@@ -1,0 +1,25 @@
+{% extends 'layouts/public_base.html' %}
+
+{% block description %}
+  Create a new course
+{% endblock %}
+
+{% block keywords %}
+  Add course, Create Course
+{% endblock %}
+
+{% block title %}
+  {{ course.title }}
+{% endblock %}
+
+{% block content %}
+<section class="mt-4">
+    <div class="row">
+        <form action="" method="post">
+            {%csrf_token%}
+            {% include 'pages/course_form.html'%}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</section>
+{% endblock %}
