@@ -19,7 +19,7 @@
         <div class="card" style="width: 18rem;">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
+              <h5 class="card-title">{{course.title}}</h5>
               <p class="card-text">{{ course.short_desc }}</p>
               <a href="{% url 'course:course_detail' course.slug %}" class="btn btn-primary">Go somewhere</a>
             </div>
