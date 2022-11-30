@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from main.forms import ContactForm
+from main.forms import ContactForm, RegisterForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
+from django.views.generic import CreateView
 # Create your views here.
 def home(request):
     context = {
@@ -43,3 +46,39 @@ def thank_you_contact_us(request):
         'title': 'Among Us!!!!!!!!!!!!!!!!!!!!'
     }
     return render(request, 'pages/thank_you_contact_us.html', context)
+
+def register_user(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            print(username, password)
+            user = User.objects.create_user(username, 'lmao@email.com',password)
+            user.user_permissions.clear()
+            return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
+    else:
+        form = RegisterForm()
+    return render(request, 'pages/register_user.html', {'form': form})
+
+def login_user(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            print(username, password)
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
+            else:
+                print("u done fucked up now!")
+            
+    else:
+        form = RegisterForm()
+    return render(request, 'pages/login_user.html', {'form': form})

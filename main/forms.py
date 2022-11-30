@@ -5,3 +5,7 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
     sender = forms.EmailField()
     cc_myself = forms.BooleanField(required=False)
+
+class RegisterForm(forms.Form):
+    username = forms.CharField(max_length=100, required=True)
+    password = forms.CharField(max_length=100, required=True)

@@ -49,3 +49,7 @@ class CourseClass(CourseCommonInfo):
     title = models.CharField(max_length=250)
     is_free = models.BooleanField(default=False)
     course = models.ForeignKey(Course, related_name='classes', on_delete=models.CASCADE)
+
+####################################
+#HERE LIES A TRAGEDY#
+####################################

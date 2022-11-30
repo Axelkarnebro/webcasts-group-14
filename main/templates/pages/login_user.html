@@ -1,0 +1,25 @@
+{% extends 'layouts/public_base.html' %}
+
+{% block description %}
+  Login
+{% endblock %}
+
+{% block keywords %}
+  User, login
+{% endblock %}
+
+{% block title %}
+  login
+{% endblock %}
+
+{% block content %}
+<section class="mt-4">
+    <div class="row">
+        <form action="" method="post">
+            {%csrf_token%}
+            {% include 'pages/login_form.html'%}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</section>
+{% endblock %}

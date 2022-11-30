@@ -1,0 +1,25 @@
+{% extends 'layouts/public_base.html' %}
+
+{% block description %}
+  Register new user
+{% endblock %}
+
+{% block keywords %}
+  User, registration
+{% endblock %}
+
+{% block title %}
+  Register
+{% endblock %}
+
+{% block content %}
+<section class="mt-4">
+    <div class="row">
+        <form action="" method="post">
+            {%csrf_token%}
+            {% include 'pages/register_form.html'%}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</section>
+{% endblock %}
