@@ -1,0 +1,50 @@
+<div class="form-group
+            {% if form.title.errors %}
+              has-error
+            {% endif %}"
+>
+  <label class="control-label" for="title">Title</label>
+  <input class="form-control" type="text" id="title"
+         placeholder="title" name="title"
+         value="{{ form.title.value|default_if_none:"" }}">
+  {% if form.title.errors %}
+    <div class="form-group has-error">
+      <div class="control-label">
+        {{ form.title.errors }}
+      </div>
+    </div>
+  {% endif %}
+</div>
+<div class="form-group
+  {% if form.text.errors %}
+    has-error
+  {% endif %}"
+>
+  <label class="control-label" for="text">Text</label>
+  <input class="form-control" name="text">
+  {% if form.text.errors %}
+    <div class="form-group has-error">
+        <div class="control-label">
+             {{ form.text.errors }}
+        </div>
+    </div>
+    {% endif %}
+</input>
+</div>
+
+<div class="form-group
+  {% if form.slug.errors %}
+    has-error
+  {% endif %}"
+>
+  <label class="control-label" for="slug">slug</label>
+  <input class="form-control" name="slug">
+  {% if form.slug.errors %}
+    <div class="form-group has-error">
+        <div class="control-label">
+             {{ form.slug.errors }}
+        </div>
+    </div>
+    {% endif %}
+</input>
+</div>
