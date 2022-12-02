@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+from django.utils.text import slugify
 from .models import Article
 from article.forms import ArticleForm
 from django.contrib.auth.models import User
@@ -24,11 +24,17 @@ def article_create(request):
 
             if form.is_valid():
                 
-                user = request.user.username
+                user = request.user.id
                 title = form.cleaned_data['title']
                 text = form.cleaned_data['text']
+                slug = slugify(title)
 
-                print(user, title, text)
+                article = Article.objects.create()
+                article.authors.set([user])
+                article.article_title = title
+                article.article_text = text
+                article.slug = slug
+                article.save()
                 
                 return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
             else:
