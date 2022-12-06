@@ -22,10 +22,15 @@ def index(request):
 class CreateArticle(LoginRequiredMixin, CreateView):
     model = Article
     template_name = 'pages/article_create.html'
-    fields = ['authors']
+    fields = ['title', 'text', 'slug']
 
     def form_valid(self, form):
         print("deez")
+        response = super(CreateArticle, self).form_valid(form)
+        return response
+
+    def get_success_url(self):
+        return reverse('article:article_list')
 
 
 def article_create(request):
