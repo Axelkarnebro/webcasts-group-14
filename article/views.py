@@ -6,6 +6,8 @@ from django.utils.text import slugify
 from .models import Article
 from article.forms import ArticleForm
 from django.contrib.auth.models import User
+from django.views.generic import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 def index(request):
@@ -16,6 +18,15 @@ def index(request):
     }
 
     return render(request, 'pages/article_list.html', context)
+
+class CreateArticle(LoginRequiredMixin, CreateView):
+    model = Article
+    template_name = 'pages/article_create.html'
+    fields = ['authors']
+
+    def form_valid(self, form):
+        print("deez")
+
 
 def article_create(request):
     if request.user.is_authenticated:
