@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from main.forms import ContactForm, RegisterForm
-from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User, Group
+from django.contrib.auth import login, logout, authenticate
 from django.views.generic import CreateView
 # Create your views here.
 def home(request):
@@ -56,9 +56,24 @@ def register_user(request):
             password = form.cleaned_data['password']
 
             print(username, password)
-            user = User.objects.create_user(username, 'lmao@email.com',password)
+            try:
+                user = User.objects.create_user(username, 'lmao@email.com',password)
+            except:
+                # Send back to register page in case exception made when creating user
+                return render(request, 'pages/register_user.html',
+                # Also give context
+                {'form': form, 'nameError': 'Sorry, username already in use probably ://'})
+                
             user.user_permissions.clear()
+
+            author_group = Group.objects.get(name='authors')
+            author_group.user_set.add(user.id)
+            
             return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
+        
+        else:
+            return render(request, 'pages/register_user.html', {'form': form})
+
     else:
         form = RegisterForm()
     return render(request, 'pages/register_user.html', {'form': form})
@@ -82,3 +97,7 @@ def login_user(request):
     else:
         form = RegisterForm()
     return render(request, 'pages/login_user.html', {'form': form})
+
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect('/')

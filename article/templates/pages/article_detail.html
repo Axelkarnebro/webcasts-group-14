@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block title %}
-  {{ article.article_title }}
+  {{ article.title }}
 {% endblock %}
 
 {% block content %}
@@ -18,8 +18,8 @@
         <div class="card" style="width: 18rem;">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">{{article.article_title}}</h5>
-              <p class="card-text">{{ article.article_text }}</p>
+              <h5 class="card-title">{{article.title}}</h5>
+              <p class="card-text">{{ article.text }}</p>
             </div>
           </div>
         </div>

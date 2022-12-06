@@ -7,21 +7,23 @@
   <input class="form-control" type="text" id="username"
          placeholder="username" name="username"
          value="{{ form.username.value|default_if_none:"" }}">
-  {% if form.username.errors %}
+  {% if form.username.errors or nameError %}
     <div class="form-group has-error">
       <div class="control-label">
         {{ form.username.errors }}
+        {{ nameError }}
       </div>
     </div>
   {% endif %}
 </div>
+
 <div class="form-group
   {% if form.password.errors %}
     has-error
   {% endif %}"
 >
-  <label class="control-label" for="course">Password</label>
-  <input class="form-control" name="password">
+  <label class="control-label" for="pw">Password</label>
+  <input class="form-control" id = "pw" name="password">
   {% if form.password.errors %}
     <div class="form-group has-error">
         <div class="control-label">
@@ -29,6 +31,24 @@
         </div>
     </div>
     {% endif %}
-</input>
+  </input>
 </div>
+
+<div class="form-group 
+  {% if form.author.errors %}
+    has-error
+  {% endif %}">
+  <div class="form-check">
+    <label class="form-check-label" for="check">
+      Author
+    </label>
+    <input class="form-check-input" type="checkbox" value="true" id="check" name="author">
+    {% if form.author.errors %}
+      <div class="form-group has-error">
+          <div class="control-label">
+              {{ form.author.errors }}
+          </div>
+      </div>
+    {% endif %}
+  </div>
 </div>

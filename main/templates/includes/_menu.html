@@ -1,6 +1,6 @@
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'main:home' %}">Django Tutorials</a>
+      <a class="navbar-brand" href="{% url 'article:article_list' %}">Da News</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
               aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,7 +8,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse" style="">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'main:home' %}">Home</a>
+            <a class="nav-link" aria-current="page" href="{% url 'main:home' %}">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'course:course_list' %}">Courses</a>
@@ -18,6 +18,21 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'main:contact_us' %}">Contact Us pls dont</a>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:logout_user' %}">Log out</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:login_user' %}">Log in</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:register_user' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'article:article_create' %}">FREE iPhone!!!!!!!!!</a>
           </li>
         </ul>
       </div>

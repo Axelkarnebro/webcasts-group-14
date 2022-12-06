@@ -4,8 +4,8 @@ from django.conf import settings
 # Create your models here.
 class Article(models.Model):
     authors = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='articles')
-    article_title = models.CharField(max_length=50)
-    article_text = models.TextField(max_length=3000)
+    title = models.CharField(max_length=50)
+    text = models.TextField(max_length=3000)
     slug = models.SlugField(max_length=255, unique=True, blank=False, null=True)
 
 class Comment(models.Model):
