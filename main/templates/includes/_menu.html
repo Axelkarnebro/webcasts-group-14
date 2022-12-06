@@ -19,9 +19,15 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'main:contact_us' %}">Contact Us pls dont</a>
           </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:logout_user' %}">Log me TF OUT!!!!!</a>
+          </li>
+          {% else %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'main:login_user' %}">Log in</a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'main:register_user' %}">Register</a>
           </li>
