@@ -19,32 +19,39 @@ def index(request):
 
 def article_create(request):
     if request.user.is_authenticated:
-        if request.method == 'POST':
-            form = ArticleForm(request.POST)
+        if request.user.has_perm('article.add_article'):
+            if request.method == 'POST':
+                form = ArticleForm(request.POST)
 
-            if form.is_valid():
-                
-                user = request.user.id
-                title = form.cleaned_data['title']
-                text = form.cleaned_data['text']
-                slug = slugify(title)
+                if form.is_valid():
+                    
+                    user = request.user.id
+                    title = form.cleaned_data['title']
+                    text = form.cleaned_data['text']
+                    slug = slugify(title)
 
-                article = Article.objects.create()
-                article.authors.set([user])
-                article.article_title = title
-                article.article_text = text
-                article.slug = slug
-                article.save()
-                
-                return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
+                    article = Article.objects.create()
+                    article.authors.set([user])
+                    article.article_title = title
+                    article.article_text = text
+                    article.slug = slug
+                    article.save()
+                    
+                    return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
+                else:
+                    
+                    print(form.errors)
             else:
-                
-                print(form.errors)
+                form = ArticleForm()
+            return render(request, 'pages/article_create.html', {'form': form})
+        
+        # If user lacks article creating permissions
         else:
-            form = ArticleForm()
-        return render(request, 'pages/article_create.html', {'form': form})
+            return HttpResponseRedirect(reverse('main:login_user'))
+
     else:
         print("fuck u")
+        return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
 
 def article_detail(request, slug):
     article = Article.objects.get(slug__exact=slug)

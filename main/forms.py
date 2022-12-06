@@ -7,5 +7,6 @@ class ContactForm(forms.Form):
     cc_myself = forms.BooleanField(required=False)
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(max_length=100, required=True)
-    password = forms.CharField(max_length=100, required=True)
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=100)
+    author = forms.BooleanField(required=False)

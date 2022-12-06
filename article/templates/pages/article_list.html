@@ -1,11 +1,11 @@
 {% extends 'layouts/public_base.html' %}
 {% load static %}
 {% block description %}
-  List of django courses
+  All articles listed
 {% endblock %}
 
 {% block keywords %}
-  Course List, Free courses, Not a scam
+  Article, Feed, List
 {% endblock %}
 
 {% block title %}
@@ -14,7 +14,7 @@
 
 {% block content %}
     <section class="py-5">
-        <div class="row py-5">
+        <div class="column py-5">
         {%for article in articles%}
         <div class="card" style="width: 18rem;">
             <img src="..." class="card-img-top" alt="...">
