@@ -2,8 +2,10 @@
     <div class="position-sticky pt-3">
       <ul class="nav flex-column">
         <li class="nav-item">
-            <h2 class="px-3">
-            Da News
+            <h2>
+                <a class="nav-link" href="{% url 'main:home' %}">
+                    Da News
+                </a>
             </h2>
         </li>
         {% if request.user.is_authenticated %}
