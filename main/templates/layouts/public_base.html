@@ -14,20 +14,25 @@
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
 </head>
+
 <body>
 
-<header>
-  {% block menu %}
-    {% include "includes/_menu.html" %}
-  {% endblock %}
+<!-- OLD navbar
+<header class="py-5">
+  {% include 'includes/_menu.html' %}
 </header>
+-->
 
-<main class="py-5">
-  <div class="container">
-    {% block content %}
-    {% endblock %}
+<div class="container-fluid">
+  <div class="row">
+    {%include 'includes/_sidebar.html'%}
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+      {% block content %}
+      {% endblock %}
+    </main>
   </div>
-</main>
+</div>
 
 <footer class="text-muted py-5">
   <div class="container">
