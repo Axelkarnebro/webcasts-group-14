@@ -13,18 +13,36 @@
 {% endblock %}
 
 {% block content %}
-    <section class="py-5">
-        <div class="column py-5">
+    <section class="row py-5">
+
+        <!-- Left side of article list page, meant to display large articles -->
+        <div class="col py-5">
         {%for article in articles%}
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="flex">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{article.title}}</h5>
+            <h6 class="p-1">{{article.text}}</h6>
+            <p class="card-text">{{ article.authors }}</p>
+            <a href="{% url 'article:article_detail' article.slug %}" class="btn btn-primary">Loogathis!!!!</a>
+          </div>
+        </div>
+        {% endfor %}
+        </div>
+
+        <!-- Right side of article list page, meant to display small articles -->
+        <div class="col py-5">
+          {%for article in articles%}
+          <div class="card" style="flex">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{article.title}}</h5>
-              <p class="card-text">{{ article.authors }}</p>
-              <a href="{% url 'article:article_detail' article.slug %}" class="btn btn-primary">Go somewhere</a>
+              <p class="card-text">{{ article.text }}</p>
+              <a href="{% url 'article:article_detail' article.slug %}" class="btn btn-primary">Click for free article viewing!!!</a>
             </div>
           </div>
-        {% endfor %}
-        </div>
+          {% endfor %}
+          </div>
+
   </section>
 {% endblock %}
