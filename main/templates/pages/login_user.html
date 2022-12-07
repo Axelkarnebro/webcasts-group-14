@@ -1,4 +1,4 @@
-{% extends 'layouts/public_base.html' %}
+{% extends 'layouts/private_base.html' %}
 
 {% block description %}
   Login
@@ -14,12 +14,14 @@
 
 {% block content %}
 <section class="mt-4">
-    <div class="row">
-        <form action="" method="post">
+  <div class="row justify-content-center">
+    <div class="col-5">
+        <form class="row justify-content-center" action="" method="post">
             {%csrf_token%}
             {% include 'pages/login_form.html'%}
-            <input type="submit" value="Submit">
+            <button class="col-3 m-3 btn btn-primary" type="submit">Log IN!!</button>
         </form>
     </div>
+  </div>
 </section>
 {% endblock %}

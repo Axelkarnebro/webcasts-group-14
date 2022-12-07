@@ -1,4 +1,4 @@
-<div class="form">
+<div class="form col-4">
   <form method="post"
         action="{% url 'main:register_user' %}"
   >
@@ -71,9 +71,8 @@
         </div>
       {% endif %}
     </div>
-    <div class="form-group">
-      <input class="form-control btn btn-primary" type="submit"
-             value="Register">
+    <div class="form-group row justify-content-center">
+      <button class="col-3 m-3 btn btn-primary" type="submit">Register!!</button>
     </div>
   </form>
   <p class="message">Already Registered? <a href="{% url 'main:login_user' %}">Login
