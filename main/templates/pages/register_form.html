@@ -1,54 +1,83 @@
-<div class="form-group
-            {% if form.username.errors %}
-              has-error
-            {% endif %}"
->
-  <label class="control-label" for="username">Username</label>
-  <input class="form-control" type="text" id="username"
-         placeholder="username" name="username"
-         value="{{ form.username.value|default_if_none:"" }}">
-  {% if form.username.errors or nameError %}
-    <div class="form-group has-error">
-      <div class="control-label">
-        {{ form.username.errors }}
-        {{ nameError }}
-      </div>
-    </div>
-  {% endif %}
-</div>
-
-<div class="form-group
-  {% if form.password.errors %}
-    has-error
-  {% endif %}"
->
-  <label class="control-label" for="pw">Password</label>
-  <input class="form-control" id = "pw" name="password">
-  {% if form.password.errors %}
-    <div class="form-group has-error">
-        <div class="control-label">
-             {{ form.password.errors }}
-        </div>
-    </div>
-    {% endif %}
-  </input>
-</div>
-
-<div class="form-group 
-  {% if form.author.errors %}
-    has-error
-  {% endif %}">
-  <div class="form-check">
-    <label class="form-check-label" for="check">
-      Author
-    </label>
-    <input class="form-check-input" type="checkbox" value="true" id="check" name="author">
-    {% if form.author.errors %}
-      <div class="form-group has-error">
+<div class="form">
+  <form method="post"
+        action="{% url 'main:register_user' %}"
+  >
+    {% csrf_token %}
+    <div class="form-group
+                {% if form.email.errors %} 
+                  has-error 
+                {% endif %}"
+    >
+      <label class="control-label" for="signin-email">E-mail</label>
+      <input class="form-control" type="email" id="signin-email"
+             placeholder="E-mail" name="email"
+             value="{{ form.email.value|default_if_none:"" }}">
+      {% if form.email.errors %}
+        <div class="form-group has-error">
           <div class="control-label">
-              {{ form.author.errors }}
+            {{ form.email.errors }}
           </div>
-      </div>
-    {% endif %}
-  </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="form-group
+                {% if form.username.errors %}
+                  has-error
+                {% endif %}"
+    >
+      <label class="control-label" for="signin-username">Username</label>
+      <input class="form-control" type="username" id="signin-username"
+             placeholder="Username" name="username"
+             value="{{ form.username.value|default_if_none:"" }}">
+      {% if form.username.errors %}
+        <div class="form-group has-error">
+          <div class="control-label">
+            {{ form.username.errors }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="form-group
+                {% if form.password1.errors %}
+                  has-error
+                {% endif %}"
+    >
+      <label class="control-label" for="signin-password1">Password</label>
+      <input class="form-control" type="password" id="signin-password1"
+             placeholder="Password" name="password1"
+             value="{{ form.password1.value|default_if_none:"" }}">
+      {% if form.password1.errors %}
+        <div class="form-group has-error">
+          <div class="control-label">
+            {{ form.password1.errors }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="form-group
+                {% if form.password2.errors %}
+                  has-error
+                {% endif %}"
+    >
+      <label class="control-label" for="signin-password2">Re enter Password</label>
+      <input class="form-control" type="password" id="signin-password2"
+             placeholder="Password Again" name="password2"
+             value="{{ form.password2.value|default_if_none:"" }}">
+      {% if form.password2.errors %}
+        <div class="form-group has-error">
+          <div class="control-label">
+            {{ form.password2.errors }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <input class="form-control btn btn-primary" type="submit"
+             value="Register">
+    </div>
+  </form>
+  <p class="message">Already Registered? <a href="{% url 'main:login_user' %}">Login
+    Now</a></p>
+  <p class="message">Your details are Secure and Private to you.<br>
+    We do not Spam</p>
 </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -6,6 +6,7 @@ from main.forms import ContactForm, RegisterForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, logout, authenticate
 from django.views.generic import CreateView
+from django.views import View
 # Create your views here.
 def home(request):
     context = {
@@ -47,36 +48,53 @@ def thank_you_contact_us(request):
     }
     return render(request, 'pages/thank_you_contact_us.html', context)
 
-def register_user(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
+# def register_user(request):
+#     if request.method == 'POST':
+#         form = RegisterForm(request.POST)
 
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+#         if form.is_valid():
+#             username = form.cleaned_data['username']
+#             password = form.cleaned_data['password']
 
-            print(username, password)
-            try:
-                user = User.objects.create_user(username, 'lmao@email.com',password)
-            except:
-                # Send back to register page in case exception made when creating user
-                return render(request, 'pages/register_user.html',
-                # Also give context
-                {'form': form, 'nameError': 'Sorry, username already in use probably ://'})
+#             print(username, password)
+#             try:
+#                 user = User.objects.create_user(username, 'lmao@email.com',password)
+#             except:
+#                 # Send back to register page in case exception made when creating user
+#                 return render(request, 'pages/register_user.html',
+#                 # Also give context
+#                 {'form': form, 'nameError': 'Sorry, username already in use probably ://'})
                 
-            user.user_permissions.clear()
+#             user.user_permissions.clear()
 
-            #author_group = Group.objects.get(name='authors')
-            #author_group.user_set.add(user.id)
+#             #author_group = Group.objects.get(name='authors')
+#             #author_group.user_set.add(user.id)
             
-            return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
+#             return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
         
-        else:
-            return render(request, 'pages/register_user.html', {'form': form})
+#         else:
+#             return render(request, 'pages/register_user.html', {'form': form})
 
-    else:
-        form = RegisterForm()
-    return render(request, 'pages/register_user.html', {'form': form})
+#     else:
+#         form = RegisterForm()
+#     return render(request, 'pages/register_user.html', {'form': form})
+
+class Register(View):
+    def get(self, request):
+        context = {
+            'form':RegisterForm
+        }
+        return render(request, 'pages/register_user.html', context)
+
+    def post(self, request):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+        context = {
+            'form':form
+        }
+        return render(request, 'pages/register_user.html', context)
 
 def login_user(request):
     if request.method == 'POST':
