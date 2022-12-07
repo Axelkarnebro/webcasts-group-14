@@ -7,7 +7,7 @@ from .models import Article
 from article.forms import ArticleForm
 from django.contrib.auth.models import User
 from django.views.generic import CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 # Create your views here.
 def index(request):
@@ -19,10 +19,11 @@ def index(request):
 
     return render(request, 'pages/article_list.html', context)
 
-class CreateArticle(LoginRequiredMixin, CreateView):
+class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Article
     template_name = 'pages/article_create.html'
     fields = ['title', 'text', 'slug']
+    permission_required = ('article.add_article',)
 
     def form_valid(self, form):
         print("deez")

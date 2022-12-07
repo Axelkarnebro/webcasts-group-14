@@ -66,8 +66,8 @@ def register_user(request):
                 
             user.user_permissions.clear()
 
-            author_group = Group.objects.get(name='authors')
-            author_group.user_set.add(user.id)
+            #author_group = Group.objects.get(name='authors')
+            #author_group.user_set.add(user.id)
             
             return HttpResponseRedirect(reverse('main:thank_you_contact_us'))
         
