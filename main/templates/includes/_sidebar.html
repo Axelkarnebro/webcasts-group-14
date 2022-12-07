@@ -1,4 +1,4 @@
-<nav id="sidebarMenu" class="col-lg-2 d-md-block sidebar collapse">
+<nav id="sidebarMenu" class="col-2 d-md-block sidebar collapse">
     <div class="sticky-top pt-3">
       <ul class="nav flex-column">
         <li class="nav-item">
@@ -8,31 +8,6 @@
                 </a>
             </h2>
         </li>
-        {% if request.user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'main:logout_user' %}">
-            Log out
-          </a>
-        </li>
-            {% if perms.article.add_article %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'article:article_create' %}">
-                    Create article
-                </a>
-            </li>
-            {% endif %}
-        {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'main:login_user' %}">
-              Log in
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'main:register_user' %}">
-              Register
-            </a>
-          </li>
-        {% endif %}
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="{% url 'main:home' %}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
