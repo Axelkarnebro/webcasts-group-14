@@ -14,6 +14,13 @@
             Log out
           </a>
         </li>
+            {% if perms.article.add_article %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'article:article_create' %}">
+                    Create article
+                </a>
+            </li>
+            {% endif %}
         {% else %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'main:login_user' %}">
