@@ -13,15 +13,24 @@
 {% endblock %}
 
 {% block content %}
-    <section class="py-5">
-        <div class="row py-5">
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">{{article.title}}</h5>
-              <p class="card-text">{{ article.text }}</p>
-            </div>
-          </div>
+  <section class="row pt-5">
+      <div class="card" style="col">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{article.title}}</h5>
+          <p class="card-text">{{ article.text }}</p>
+          {% for author in article.authors.all %}
+          <h2>this post was made by {{ author }} gang</h2>
+          {% endfor %}
         </div>
+      </div>
   </section>
+
+  {% if request.user in article.authors.all or perms.article.delete_article %} <!-- Delete button is visible to authors and admin -->
+  <section class="row py-3">
+    <div>
+      <button type="button" class="btn btn-primary">Delete article</button>
+    </div>
+  </section>
+  {% endif %}
 {% endblock %}

@@ -28,6 +28,7 @@ class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         print("deez")
         response = super(CreateArticle, self).form_valid(form)
+        form.instance.authors.add(self.request.user)
         return response
 
     def get_success_url(self):
