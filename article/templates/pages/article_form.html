@@ -21,13 +21,12 @@
   {% endif %}"
 >
   <label class="control-label" for="text">Text</label>
-  <input class="form-control" name="text" value="{{ form.text.value|default_if_none:"" }}">
+  <textarea class="form-control" name="text">{{ form.text.value|default_if_none:"" }}</textarea>
   {% if form.text.errors %}
-    <div class="form-group has-error">
-        <div class="control-label">
-             {{ form.text.errors }}
-        </div>
-    </div>
-    {% endif %}
-</input>
+  <div class="form-group has-error">
+      <div class="control-label">
+            {{ form.text.errors }}
+      </div>
+  </div>
+  {% endif %}
 </div>
