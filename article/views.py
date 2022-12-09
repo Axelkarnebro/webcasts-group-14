@@ -27,12 +27,14 @@ def index(request):
 class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Article
     template_name = 'pages/article_create.html'
-    fields = ['title', 'text', 'slug']
+    fields = ['title', 'text']
     permission_required = ('article.add_article',)
 
     def form_valid(self, form):
+        form.instance.slug = slugify(form.instance.title)
         response = super(CreateArticle, self).form_valid(form)
         form.instance.authors.add(self.request.user)
+        
         return response
 
     def get_success_url(self):
