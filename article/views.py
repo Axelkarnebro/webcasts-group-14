@@ -8,6 +8,7 @@ from article.forms import ArticleForm
 from django.contrib.auth.models import User
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db import IntegrityError
 
 class ArticleAuthorMixin(PermissionRequiredMixin):
     def test_func(self):
@@ -32,9 +33,16 @@ class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
-        response = super(CreateArticle, self).form_valid(form)
-        form.instance.authors.add(self.request.user)
-        
+
+        try:
+            response = super(CreateArticle, self).form_valid(form)
+            form.instance.authors.add(self.request.user)
+            
+        except IntegrityError as e:
+            if 'UNIQUE' in str(e):
+                form.add_error('title', "The title for an article must be unique!")
+                return self.form_invalid(form)
+            raise e
         return response
 
     def get_success_url(self):
@@ -44,11 +52,19 @@ class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 class UpdateArticle(LoginRequiredMixin, ArticleAuthorMixin, UpdateView):
     model = Article
     template_name = 'pages/article_update.html'
-    fields = ['title', 'text', 'slug']
+    fields = ['title', 'text']
     permission_required = ('article.change_article',)
 
     def form_valid(self, form):
-        response = super(UpdateArticle, self).form_valid(form)
+        form.instance.slug = slugify(form.instance.title)
+
+        try:
+            response = super(UpdateArticle, self).form_valid(form)
+        except IntegrityError as e:
+            if 'UNIQUE' in str(e):
+                form.add_error('title', "The title for an article must be unique!")
+                return self.form_invalid(form)
+            raise e
         return response
 
     def get_success_url(self):
