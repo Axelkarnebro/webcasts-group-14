@@ -6,8 +6,13 @@ from django.utils.text import slugify
 from .models import Article
 from article.forms import ArticleForm
 from django.contrib.auth.models import User
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
+class ArticleAuthorMixin(PermissionRequiredMixin):
+    def test_func(self):
+        if isinstance(self.get_object(), Article):
+            return self.request.user in self.get_object().authors.all()
 
 # Create your views here.
 def index(request):
@@ -26,13 +31,27 @@ class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = ('article.add_article',)
 
     def form_valid(self, form):
-        print("deez")
         response = super(CreateArticle, self).form_valid(form)
         form.instance.authors.add(self.request.user)
         return response
 
     def get_success_url(self):
         return reverse('article:article_list')
+
+
+class UpdateArticle(LoginRequiredMixin, ArticleAuthorMixin, UpdateView):
+    model = Article
+    template_name = 'pages/article_update.html'
+    fields = ['title', 'text', 'slug']
+    permission_required = ('article.change_article',)
+
+    def form_valid(self, form):
+        response = super(UpdateArticle, self).form_valid(form)
+        return response
+
+    def get_success_url(self):
+        return reverse('article:article_list')
+
 
 
 def article_create(request):
