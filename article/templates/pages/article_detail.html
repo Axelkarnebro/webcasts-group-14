@@ -41,4 +41,23 @@
     </div>
   </section>
   {% endif %}
+
+  {% if request.user.is_authenticated %}
+  <form action="" method="post">
+    {% csrf_token %}
+    {% include 'pages/article_comment_form.html'%}
+    <button class="btn btn-primary mt-3" type="submit" value="Submit">Post Comment</button>
+  </form>
+  {% endif %}
+  
+  {% for comment in comments %}
+  <section class="row my-2">
+    <div class="card" style="col">
+      <div class="card-body">
+        <h5 class="card-title">Comment by: {{ comment.user }}</h5>
+        <p class="card-text">{{ comment.comment_text }}</p>
+      </div>
+    </div>
+  </section>
+  {% endfor %}
 {% endblock %}

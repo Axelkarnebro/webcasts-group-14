@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.text import slugify
-from .models import Article
-from article.forms import ArticleForm
+from .models import Article, Comment
+from article.forms import ArticleForm, CommentForm
 from django.contrib.auth.models import User
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -110,9 +110,27 @@ def article_create(request):
 
 def article_detail(request, slug):
     article = Article.objects.get(slug__exact=slug)
+    comments = Comment.objects.filter(article=article)
 
     context = {
-        'article': article
+        'article': article,
+        'comments': comments
     }
+
+    # Handling comments
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+
+            if form.is_valid():
+                
+                user = request.user
+                comment_text = form.cleaned_data['comment_text']
+
+                comment = Comment.objects.create(user=user, article=article, comment_text=comment_text)
+                
+                return render(request, 'pages/article_detail.html', context)
+            else:
+                print(form.errors)
 
     return render(request, 'pages/article_detail.html', context)
