@@ -7,6 +7,8 @@ class Article(models.Model):
     title = models.CharField(max_length=50)
     text = models.TextField(max_length=3000)
     slug = models.SlugField(max_length=255, unique=True, blank=False, null=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+    video = models.FileField(upload_to='videos/', null=True, blank=True)
 
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

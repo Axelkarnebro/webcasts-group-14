@@ -29,4 +29,31 @@
       </div>
   </div>
   {% endif %}
+
+  <label class="control-label" for="thumbnail">Thumbnail Image</label>
+  <input type="file" class="form-control" id="thumbnail"
+            placeholder="Thumbnail" name="thumbnail">{{ form.thumbnail.value|default_if_none:"" }}
+  {% if form.thumbnail.errors %}
+    <div class="form-group has-error">
+      <div class="control-label">
+        {{ form.thumbnail.errors }}
+      </div>
+    </div>
+  {% endif %}
+</div>
+<div class="form-group
+            {% if form.video.errors %}
+              has-error
+            {% endif %}"
+>
+  <label class="control-label" for="video">Video</label>
+  <input type="file" class="form-control" id="video"
+            placeholder="Video" name="video">{{ form.video.value|default_if_none:"" }}
+  {% if form.video.errors %}
+    <div class="form-group has-error">
+      <div class="control-label">
+        {{ form.video.errors }}
+      </div>
+    </div>
+  {% endif %}
 </div>

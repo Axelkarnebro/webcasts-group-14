@@ -15,7 +15,13 @@
 {% block content %}
   <section class="row pt-5">
       <div class="card" style="col">
-        <img src="..." class="card-img-top" alt="...">
+        {% if article.video.url != null %}
+        <video controls width="100%">
+          <source src="{{article.video.url}}" type="video/mp4">
+        </video>
+        {% elif article.thumbnail.url != null%}
+        <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
+        {%endif%}
         <div class="card-body">
           <h5 class="card-title">{{article.title}}</h5>
           <p class="card-text">{{ article.text }}</p>

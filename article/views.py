@@ -28,7 +28,7 @@ def index(request):
 class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Article
     template_name = 'pages/article_create.html'
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'thumbnail', 'video']
     permission_required = ('article.add_article',)
 
     def form_valid(self, form):
@@ -52,7 +52,7 @@ class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 class UpdateArticle(LoginRequiredMixin, ArticleAuthorMixin, UpdateView):
     model = Article
     template_name = 'pages/article_update.html'
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'thumbnail', 'video']
     permission_required = ('article.change_article',)
 
     def form_valid(self, form):
