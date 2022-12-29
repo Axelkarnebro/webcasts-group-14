@@ -5,7 +5,7 @@
 >
   <label class="control-label" for="title">Title</label>
   <input class="form-control" type="text" id="title"
-         placeholder="title" name="title"
+         placeholder="Title" name="title"
          value="{{ form.title.value|default_if_none:"" }}">
   {% if form.title.errors %}
     <div class="form-group has-error">
@@ -15,7 +15,41 @@
     </div>
   {% endif %}
 </div>
+
 <div class="form-group
+            {% if form.category.errors %}
+              has-error
+            {% endif %}"
+>
+  <label class="control-label" for="category">Article Category</label>
+  <select class="form-select" aria-label="Category selector idk" id="category" name="category">
+    {% for category in categories %}
+    <option value="{{ category.id }}" {% if category.id == form.category.value %}selected="selected"{% endif %}>
+      {{ category.name }}
+    </option>
+    {% endfor %}
+  </select>
+  {% if form.category.errors %}
+    <div class="form-group has-error">
+      <div class="control-label">
+        {{ form.category.errors }}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<div class="form-group
+            {% if form.title.errors %}
+              has-error
+            {% endif %}"
+>
+  <label class="control-label" for="short_desc">Short description</label>
+  <input class="form-control" type="text" id="short_desc"
+         placeholder="Short description (Not required)" name="short_desc"
+         value="{{ form.short_desc.value|default_if_none:"" }}">
+</div>
+
+<div class="form-group my-4
   {% if form.text.errors %}
     has-error
   {% endif %}"
@@ -29,6 +63,7 @@
       </div>
   </div>
   {% endif %}
+</div>
 
   <label class="control-label" for="thumbnail">Thumbnail Image</label>
   <input type="file" class="form-control" id="thumbnail" accept="image/png, image/jpeg"
@@ -40,7 +75,7 @@
       </div>
     </div>
   {% endif %}
-</div>
+
 <div class="form-group
             {% if form.video.errors %}
               has-error

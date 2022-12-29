@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.text import slugify
-from .models import Article, Comment
+from .models import Article, Category, Comment
 from article.forms import ArticleForm, CommentForm
 from django.contrib.auth.models import User
 from django.views.generic import CreateView, UpdateView
@@ -28,7 +28,7 @@ def index(request):
 class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Article
     template_name = 'pages/article_create.html'
-    fields = ['title', 'text', 'thumbnail', 'video']
+    fields = ['title', 'category', 'short_desc', 'text', 'thumbnail', 'video']
     permission_required = ('article.add_article',)
 
     def form_valid(self, form):
@@ -48,11 +48,17 @@ class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('article:article_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
+    
+
 
 class UpdateArticle(LoginRequiredMixin, ArticleAuthorMixin, UpdateView):
     model = Article
     template_name = 'pages/article_update.html'
-    fields = ['title', 'text', 'thumbnail', 'video']
+    fields = ['title', 'category', 'short_desc', 'text', 'thumbnail', 'video']
     permission_required = ('article.change_article',)
 
     def form_valid(self, form):
@@ -69,6 +75,11 @@ class UpdateArticle(LoginRequiredMixin, ArticleAuthorMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('article:article_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
 
 
 

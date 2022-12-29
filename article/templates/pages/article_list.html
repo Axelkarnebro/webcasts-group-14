@@ -17,25 +17,28 @@
 
         <!-- Left side of article list page, meant to display large articles -->
         <div class="col-7">
-        {%for article in articles%}
+        {% for article in articles %}
+        {% if article.short_desc != "" %}
         <div class="card">
-          {% if article.thumbnail.url != null%}
+          {% if article.thumbnail.url != null %}
           <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
-          {%endif%}
+          {% endif %}
           <div class="card-body">
             <h5 class="card-title">{{article.title}}</h5>
-            <h6>{{article.text}}</h6>
+            <h6>{{article.short_desc}}</h6>
             <a href="{% url 'article:article_detail' article.slug %}" class="btn btn-primary">Loogathis!!!!</a>
           </div>
         </div>
+        {% endif %}
         {% endfor %}
         </div>
 
         <!-- Right side of article list page, meant to display small articles -->
         <div class="col-5">
-          {%for article in articles%}
+          {% for article in articles %}
+          {% if article.short_desc == "" %}
           <div class="card">
-            {% if article.thumbnail.url != null%}
+            {% if article.thumbnail.url != null %}
             <img src="{{article.thumbnail.url}}" class="card-img-top" alt="...">
             {%endif%}
             <div class="card-body">
@@ -44,6 +47,7 @@
               <a href="{% url 'article:article_detail' article.slug %}" class="btn btn-primary">Click for free article viewing!!!</a>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
     </section>
