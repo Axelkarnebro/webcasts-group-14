@@ -56,14 +56,22 @@
   </form>
   {% endif %}
   
-  {% for comment in comments %}
-  <section class="row my-2">
-    <div class="card" style="col">
-      <div class="card-body">
-        <h5 class="card-title">Comment by: {{ comment.user }}</h5>
-        <p class="card-text">{{ comment.comment_text }}</p>
+  <hr>
+  
+  {% if comments.count > 0 %}
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#commentSection">Show/Hide {{ comments.count }} comments</button>
+  <div class="collapse" id="commentSection">
+    {% for comment in comments %}
+    <section class="row my-2">
+      <div class="card" style="col">
+        <div class="card-body">
+          <h5 class="card-title">{{ comment.user }}</h5>
+          <p class="card-text">{{ comment.comment_text }}</p>
+        </div>
       </div>
-    </div>
-  </section>
-  {% endfor %}
+    </section>
+    {% endfor %}
+  </div>
+  {% endif %}
+
 {% endblock %}
