@@ -148,10 +148,9 @@ def reset_password(request):
             data = password_reset_form.cleaned_data['email']
             associated_users = User.objects.filter(Q(email=data))
             if associated_users.exists():
-                print("a")
                 for user in associated_users:
                     subject = "Password Reset Requested"
-                    email_template_name = "pages/resetpasswordemail.txt"
+                    email_template_name = "registration/resetpasswordemail.txt"
                     c = {
 					"email":user.email,
 					'domain':'127.0.0.1:8000',
@@ -166,9 +165,10 @@ def reset_password(request):
                         send_mail(subject, email, 'axel.karnebro@gmail.com' , [user.email], fail_silently=False)
                     except BadHeaderError:
                         return HttpResponse('Invalid header found.')
-                    return redirect ("main:reset_password_done")
+                    return redirect("/reset_password_done/")
     password_reset_form = PasswordResetForm()
-    return render(request=request, template_name="pages/reset_password.html", context={"reset_password_form":password_reset_form})
+    return render(request=request, template_name="registration/password_reset.html", context={"password_reset_form":password_reset_form})
+
 
 def check_username(request):
     if request.method == 'POST':
