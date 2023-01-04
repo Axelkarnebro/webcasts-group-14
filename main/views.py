@@ -169,4 +169,14 @@ def reset_password(request):
                     return redirect ("main:reset_password_done")
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="pages/reset_password.html", context={"reset_password_form":password_reset_form})
-    
+
+def check_username(request):
+    if request.method == 'POST':
+        name = request.POST['username']
+
+        user = User.objects.filter(Q(username=name))
+        if user.exists():
+            return HttpResponse("This name is taken!")
+        else:
+            return HttpResponse("This name is free!")
+        
