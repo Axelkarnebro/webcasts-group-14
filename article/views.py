@@ -19,7 +19,6 @@ class ArticleAuthorMixin(PermissionRequiredMixin):
             return self.request.user in self.get_object().authors.all()
 
 # Create your views here.
-@cache_page(600)
 def index(request, category=0):
     if category is 0:
         articles = Article.objects.all()
