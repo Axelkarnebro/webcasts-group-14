@@ -16,14 +16,32 @@ class ArticleAuthorMixin(PermissionRequiredMixin):
             return self.request.user in self.get_object().authors.all()
 
 # Create your views here.
-def index(request):
-    articles = Article.objects.all()
+def index(request, category=0):
+    if category is 0:
+        articles = Article.objects.all()
+    else:
+        articles = Article.objects.filter(category=category)
+        category = Category.objects.get(id__exact=category)
+
     context = {
         'title': 'List of Articles',
-        'articles': articles
+        'articles': articles,
+        'category': category
     }
 
     return render(request, 'pages/article_list.html', context)
+
+def bad_index(request, category=1):
+    articles = Article.objects.all()
+    category = Category.objects.get(id__exact=category)
+
+    context = {
+        'title': 'List of Articles',
+        'articles': articles,
+        'category': category
+    }
+
+    return render(request, 'pages/article_list_bad.html', context)
 
 class CreateArticle(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Article
