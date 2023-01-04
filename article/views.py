@@ -171,4 +171,4 @@ def delete_article(request, slug):
             article_title.delete()
         else:
             article_detail(request, slug)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('article:article_list'))
