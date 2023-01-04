@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.text import slugify
 from .models import Article, Category, Comment
@@ -20,10 +20,10 @@ class ArticleAuthorMixin(PermissionRequiredMixin):
 
 # Create your views here.
 def index(request, category=0):
-    if category is 0:
-        articles = Article.objects.all()
+    if category == 0:
+        articles = Article.objects.all().order_by('-id')
     else:
-        articles = Article.objects.filter(category=category)
+        articles = Article.objects.filter(category=category).order_by('-id')
         category = Category.objects.get(id__exact=category)
 
     context = {
@@ -35,7 +35,7 @@ def index(request, category=0):
     return render(request, 'pages/article_list.html', context)
 
 def bad_index(request, category=1):
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by('-id')
     category = Category.objects.get(id__exact=category)
 
     context = {
@@ -142,14 +142,24 @@ def article_create(request):
 
 def article_detail(request, slug):
     article = Article.objects.get(slug__exact=slug)
-    comments = Comment.objects.filter(article=article)
+    comments = Comment.objects.filter(article=article).order_by('-id')
 
     context = {
         'article': article,
         'comments': comments
     }
 
-    # Handling comments
+    return render(request, 'pages/article_detail.html', context)
+
+def article_comment(request, articleid):
+    article = Article.objects.get(id__exact=articleid)
+    comments = Comment.objects.filter(article=article).order_by('-id')
+    
+    context = {
+        'comments': comments,
+        'article': article
+    }
+
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = CommentForm(request.POST)
@@ -158,14 +168,29 @@ def article_detail(request, slug):
                 
                 user = request.user
                 comment_text = form.cleaned_data['comment_text']
+                article=Article.objects.get(id__exact=articleid)
 
                 comment = Comment.objects.create(user=user, article=article, comment_text=comment_text)
-                
-                return render(request, 'pages/article_detail.html', context)
             else:
                 print(form.errors)
+    return render(request, 'partials/comments.html', context)
 
-    return render(request, 'pages/article_detail.html', context)
+def delete_comment(request, articleid, commentid):
+    article = Article.objects.get(id__exact=articleid)
+    comments = Comment.objects.filter(article=article).order_by('-id')
+    
+    context = {
+        'comments': comments,
+        'article': article
+    }
+
+    # Delete horrible comment
+    comment = Comment.objects.get(id__exact=commentid)
+
+    if request.user == comment.user:
+        comment.delete()
+
+    return render(request, 'partials/comments.html', context)
 
 def delete_article(request, slug):
     if request.user.has_perm('article.change_article'):

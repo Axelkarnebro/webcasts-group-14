@@ -1,0 +1,39 @@
+<div id="comment_list" class="mt-3">
+
+  {% if request.user.is_authenticated %}
+  <form action="" method="post">
+    {% csrf_token %}
+    {% include 'pages/article_comment_form.html'%}
+  </form>
+  {% endif %}
+
+  <hr>
+
+  {% if comments.count > 0 %}
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#commentSection">Show/Hide {{ comments.count }} comments</button>
+    <div class="collapse show" id="commentSection">
+      {% for comment in comments %}
+      <section class="row my-2">
+        <div class="card" style="col">
+          <div class="card-body">
+            <h5 class="card-title">{{ comment.user }}</h5>
+            <p class="card-text">{{ comment.comment_text }}</p>
+              {% if request.user == comment.user %}
+                  {% comment %}
+                  "The delete comment button below is only visible to the user who posted it"
+                  {% endcomment %}
+                  <button class="btn btn-primary btn-sm mt-3" type="submit" 
+                  hx-get="{% url 'article:delete_comment' articleid=article.id commentid=comment.id %}"
+                  hx-target="#comment_list"
+                  hx-swap="innerHTML"
+                  >
+                  Delete Comment
+                  </button>
+              {% endif %}
+          </div>
+        </div>
+      </section>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
