@@ -145,3 +145,12 @@ def article_detail(request, slug):
                 print(form.errors)
 
     return render(request, 'pages/article_detail.html', context)
+
+def delete_article(request, slug):
+    if request.user.has_perm('article.change_article'):
+        article_title = Article.objects.filter(slug__exact=slug, authors=request.user)
+        if article_title:
+            article_title.delete()
+        else:
+            article_detail(request, slug)
+    return HttpResponseRedirect('/')

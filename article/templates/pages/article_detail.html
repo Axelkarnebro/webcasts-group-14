@@ -35,7 +35,7 @@
   {% if request.user in article.authors.all%} <!-- Delete button is visible to authors and admin -->
   <section class="row py-3">
     <div>
-      <button type="button" class="btn btn-primary">Delete article</button>
+      <a href="{% url 'article:delete_article' article.slug %}" class="btn btn-primary">Delete article</a>
     </div>
   </section>
   {% endif %}
