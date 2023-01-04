@@ -13,7 +13,7 @@ class Article(models.Model):
     title = models.CharField(max_length=50)
     short_desc = models.TextField(max_length=200, null=True, blank=True)
     text = models.TextField(max_length=3000)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=False, null=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
     video = models.FileField(upload_to='videos/', null=True, blank=True)
