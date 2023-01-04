@@ -1,0 +1,40 @@
+{% extends 'layouts/public_base.html' %}
+{% load static %}
+{% block description %}
+  The events that are occurring among us
+{% endblock %}
+
+{% block keywords %}
+  Upcoming events table
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+    <section class="mt-4 text-center">
+      <h1>Events, organized by people for people!</h1>
+
+      <hr class="my-5">
+
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Event title</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for event in events %}
+          <tr>
+            <th scope="row">{{ event.date }}</th>
+            <td>{{ event.event_title }}</td>
+            <td>{{ event.event_desc }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </section>
+{% endblock %}

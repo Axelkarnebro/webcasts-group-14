@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from article.models import Upcoming_Event
 
 from main.forms import ContactForm, RegisterForm
 from django.contrib.auth.models import User, Group
@@ -19,6 +20,13 @@ def about_us(request):
         'title': 'Among Us'
     }
     return render(request, 'pages/about_us.html', context)
+
+def upcoming_events(request):
+    context = {
+        'title': 'Upcoming Events',
+        'events': Upcoming_Event.objects.all().order_by('date')
+    }
+    return render(request, 'pages/upcoming_events.html', context)
 
 def contact_us(request):
     # if this is a POST request we need to process the form data

@@ -1,13 +1,14 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
 
-from .views import home, about_us, contact_us, thank_you_contact_us, login_user, logout_user, Register
+from .views import home, about_us, contact_us, thank_you_contact_us, login_user, logout_user, Register, upcoming_events
 
 app_name = 'main'
 
 urlpatterns = [
     path('', home, name='home'),
     path('about-us',about_us, name='about_us'),
+    path('upcoming-events', upcoming_events, name='upcoming_events'),
     path('contact-us', contact_us, name='contact_us'),
     path('thank-you-contact-us', thank_you_contact_us, name='thank_you_contact_us'),
     path('register/', Register.as_view(), name='register_user'),
