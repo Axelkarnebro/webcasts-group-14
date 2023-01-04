@@ -10,12 +10,16 @@ from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db import IntegrityError
 
+
+from django.views.decorators.cache import cache_page
+
 class ArticleAuthorMixin(PermissionRequiredMixin):
     def test_func(self):
         if isinstance(self.get_object(), Article):
             return self.request.user in self.get_object().authors.all()
 
 # Create your views here.
+@cache_page(600)
 def index(request, category=0):
     if category is 0:
         articles = Article.objects.all()
