@@ -16,7 +16,7 @@
   <section class="row pt-5">
       <div class="card" style="col">
         {% if article.video.url != null %}
-        <video controls width="100%">
+        <video controls width="100%" style="object-fit: contain; height: 400px">
           <source src="{{article.video.url}}" type="video/mp4">
         </video>
         {% elif article.thumbnail.url != null%}
