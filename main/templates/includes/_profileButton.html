@@ -15,6 +15,11 @@
                 </a>
             </li>
             {% endif %}
+        <lis class="nav-item">
+          <a class="nav-link" href="{% url 'main:reset_password' %}">
+            Reset Password
+          </a>
+        </li>
         {% else %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'main:login_user' %}">
