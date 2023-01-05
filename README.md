@@ -14,3 +14,9 @@ activate the virtual environment
 pip install -r requirements.txt
 python manage.py runserver
 ```
+
+(if it doesn't work, maybe test migrating some database stuff)
+
+```
+python manage.py migrate
+```
