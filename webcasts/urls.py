@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    path('silk/', include('silk.urls', namespace="silk")),
     path('', include('main.urls')),
     path('admin/', admin.site.urls),
     path('article/', include('article.urls')),

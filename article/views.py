@@ -200,3 +200,12 @@ def delete_article(request, slug):
         else:
             article_detail(request, slug)
     return HttpResponseRedirect(reverse('article:article_list'))
+
+def article_item(request, articleid):
+    article = Article.objects.get(id__exact=articleid)
+
+    context = {
+        'article': article
+    }
+
+    return render(request, 'partials/article_card.html', context)

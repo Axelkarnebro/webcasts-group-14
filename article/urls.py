@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import article_comment, bad_index, delete_comment, index, article_detail, CreateArticle, UpdateArticle, delete_article
+from .views import article_comment, article_item, bad_index, delete_comment, index, article_detail, CreateArticle, UpdateArticle, delete_article
 
 app_name = 'article'
 
@@ -18,6 +18,7 @@ urlpatterns = [
 htmx_urlspatterns = [
     path('article/<int:articleid>/comment', article_comment, name='article_comment'),
     path('article/<int:articleid>/<int:commentid>/delete_comment', delete_comment, name='delete_comment'),
+    path('list/item/<int:articleid>', article_item, name="article_item")
 ]
 
 urlpatterns += htmx_urlspatterns
